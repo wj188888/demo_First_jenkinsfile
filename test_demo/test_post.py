@@ -64,3 +64,5 @@ class Test_post_01():
             log.debug("断言正确，删除岗位-用例通过")
         except AssertionError:
             log.debug("断言出现错误!")
+if __name__ == '__main__':
+    pytest.main(["-vs", "test_post.py"])
