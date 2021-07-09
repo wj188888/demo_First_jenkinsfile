@@ -13,11 +13,6 @@ pipeline {
                 activate && cd C:\\Users\\admin\\.jenkins\\workspace\\my_demo_pipeline\\test_demo && pytest -vs test_post.py'''
             }
         }
-        stage('Delete workspace') {
-            steps {
-                deleteDir()
-            }
-        }
     }
     post {
         always {
@@ -29,6 +24,7 @@ pipeline {
                 mimeType: 'text/html',
                 to: '2460665525@qq.com, 1973702576@qq.com'
             )
+            deleteDir()
         }
     }
 
