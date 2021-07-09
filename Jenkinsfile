@@ -13,5 +13,10 @@ pipeline {
                 activate && cd C:\\Users\\admin\\.jenkins\\workspace\\my_demo_pipeline\\test_demo && pytest -vs test_post.py'''
             }
         }
+        stage('delete workspace') {
+            steps {
+                deleteDir()
+            }
+        }
     }
 }
