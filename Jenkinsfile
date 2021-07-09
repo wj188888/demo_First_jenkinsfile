@@ -20,13 +20,12 @@ pipeline {
         }
     }
     post {
-        always {
-        // One or more steps need to be included within each condition's block.
-            emailext(
-                subject: '构建通知: ${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}',
-                body: '${FILE,path="email.html"}',
-                to: '2460665525@qq.com, 1973702576@qq.com'
-            )
+         always {
+            emailext attachmentsPattern: 'email.html' //附件中携带测试报告
+            attachLog: true, // 附件中携带构建LOG
+            // 邮件内容
+            body: '构建失败日志请参考附件',
+            // 邮件接收人,culprits包含了近期提交人员和触发人员
+            recipientProviders: [culprits()], subject: 'Jenkins构建通知 - $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: '2460665525@qq.com, 1973702576@qq.com'
         }
-    }
 }
