@@ -22,7 +22,11 @@ pipeline {
     post {
         always {
         // One or more steps need to be included within each condition's block.
-            emailext body: '亲爱的同学们，Jenkins的使用爱好者，如果你们有收到这个邮件，代表Jenkins邮件发送成功，谢谢大家的配合~', recipientProviders: [brokenBuildSuspects()], subject: '【Jenkins构建结果测试】', to: '2460665525@qq.com'
+            emailext(
+                subject: '构建通知: ${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}',
+                body: '${FILE,path="email.html"}',
+                to: '2460665525@qq.com, 1973702576@qq.com'
+            )
         }
     }
 }
