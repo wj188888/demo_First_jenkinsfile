@@ -20,19 +20,16 @@ pipeline {
         }
     }
     post {
-         failure {
-	        script {
-	            mail to: '2460665525@qq.com',
-                    subject: "Running Pipeline: ${currentBuild.fullDisplayName}",
-                    body: "${FILE,path='email.html'}"
-	        }
-	    }
-	    success {
-	        script {
-	            mail to: '1973702576@qq.com',
-                    subject: "Running Pipeline: ${currentBuild.fullDisplayName}",
-                    body: "${FILE,path='email.html'}"
-	        }
-	    }
+        always {
+            emailext(
+                subject: "[${env.JOB_NAME}] [${env.ENV}] #${env.BUILD_NUMBER} : ${currentBuild.currentResult}",
+                body: '${FILE,path="email.html"}',
+                attachLog: true,
+                recipientProviders: [[$class: 'DevelopersRecipientProvider', $class: 'CulpritsRecipientProvider']],
+                mimeType: 'text/html',
+                to: '2460665525@qq.com, 1973702576@qq.com'
+            )
+        }
+    }
 
 }
